@@ -1,3 +1,4 @@
+```javascript
 'use strict';
 
 /* =========================================================
@@ -58,7 +59,9 @@ function setMenuState(open) {
 
   menuToggle.setAttribute(
     'aria-label',
-    open ? 'Κλείσιμο μενού' : 'Άνοιγμα μενού'
+    open
+      ? 'Κλείσιμο μενού'
+      : 'Άνοιγμα μενού'
   );
 }
 
@@ -105,25 +108,7 @@ document.addEventListener('click', (event) => {
 
 
 /*
- * Close menu with Escape.
- */
-
-document.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape') return;
-
-  if (
-    menuToggle &&
-    menuToggle.getAttribute('aria-expanded') === 'true'
-  ) {
-    setMenuState(false);
-    menuToggle.focus();
-  }
-});
-
-
-/*
- * If the browser is resized back to desktop,
- * make sure the mobile menu is reset.
+ * Reset menu when returning to desktop.
  */
 
 window.addEventListener('resize', () => {
@@ -172,10 +157,6 @@ if (prefersReducedMotion) {
 
   revealElements.forEach((element, index) => {
 
-    /*
-     * Small stagger effect.
-     */
-
     const delay =
       Math.min(index % 5, 4) * 70;
 
@@ -188,10 +169,6 @@ if (prefersReducedMotion) {
 
 } else {
 
-  /*
-   * Fallback for very old browsers.
-   */
-
   revealElements.forEach((element) => {
     element.classList.add('visible');
   });
@@ -203,67 +180,134 @@ if (prefersReducedMotion) {
    ACTIVE NAVIGATION
 ========================================================= */
 
-function updateActiveNavigation() {
+/*
+ * Use IntersectionObserver instead of reading
+ * section.offsetTop on every scroll event.
+ *
+ * This avoids repeated layout calculations and
+ * prevents unnecessary forced reflows.
+ */
 
-  if (!sections.length || !navLinks.length) {
-    return;
-  }
+if (
+  sections.length &&
+  navLinks.length &&
+  'IntersectionObserver' in window
+) {
 
-  const scrollPosition =
-    window.scrollY + 180;
-
-  let currentSection = 'top';
-
-
-  sections.forEach((section) => {
-
-    if (
-      scrollPosition >= section.offsetTop
-    ) {
-      currentSection = section.id;
-    }
-
-  });
-
-
-  /*
-   * The hero does not have an id,
-   * therefore "top" represents the home state.
-   */
+  const sectionToNavLink = new Map();
 
   navLinks.forEach((link) => {
 
     const href =
       link.getAttribute('href');
 
+    if (!href?.startsWith('#')) {
+      return;
+    }
+
     const targetId =
-      href?.startsWith('#')
-        ? href.substring(1)
-        : '';
+      href.substring(1);
 
-    const isActive =
-      targetId === currentSection;
+    const targetSection =
+      document.getElementById(targetId);
 
-    link.classList.toggle(
-      'active',
-      isActive
-    );
+    if (targetSection) {
+      sectionToNavLink.set(
+        targetSection,
+        link
+      );
+    }
 
   });
+
+
+  const activeSections = new Set();
+
+
+  function updateActiveLink() {
+
+    /*
+     * Find the section closest to the top of
+     * the viewport.
+     */
+
+    let activeSection = null;
+    let smallestDistance = Infinity;
+
+    activeSections.forEach((section) => {
+
+      const rect =
+        section.getBoundingClientRect();
+
+      const distance =
+        Math.abs(rect.top - 180);
+
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        activeSection = section;
+      }
+
+    });
+
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+    });
+
+
+    if (activeSection) {
+
+      const activeLink =
+        sectionToNavLink.get(activeSection);
+
+      activeLink?.classList.add('active');
+
+    }
+
+  }
+
+
+  const navigationObserver =
+    new IntersectionObserver(
+      (entries) => {
+
+        entries.forEach((entry) => {
+
+          if (entry.isIntersecting) {
+            activeSections.add(entry.target);
+          } else {
+            activeSections.delete(entry.target);
+          }
+
+        });
+
+        updateActiveLink();
+
+      },
+      {
+        root: null,
+        rootMargin: '-180px 0px -45% 0px',
+        threshold: 0
+      }
+    );
+
+
+  sections.forEach((section) => {
+    navigationObserver.observe(section);
+  });
+
+
+} else {
+
+  /*
+   * Fallback for browsers without IntersectionObserver.
+   */
+
+  navLinks.forEach((link) => {
+    link.classList.remove('active');
+  });
+
 }
-
-window.addEventListener(
-  'scroll',
-  updateActiveNavigation,
-  { passive: true }
-);
-
-window.addEventListener(
-  'resize',
-  updateActiveNavigation
-);
-
-updateActiveNavigation();
 
 
 /* =========================================================
@@ -304,21 +348,10 @@ function openLightbox(src, alt = '') {
     'lightbox-open'
   );
 
-  /*
-   * Prevent page scrolling while the
-   * image is open.
-   */
-
   document.body.style.overflow = 'hidden';
 
-  /*
-   * Move keyboard focus to close button.
-   */
-
   requestAnimationFrame(() => {
-
     lightboxClose?.focus();
-
   });
 
 }
@@ -347,9 +380,9 @@ function closeLightbox() {
 
   document.body.style.overflow = '';
 
+
   /*
-   * Clear image after the closing transition.
-   * This also avoids keeping large images in memory.
+   * Clear image after closing transition.
    */
 
   window.setTimeout(() => {
@@ -367,8 +400,7 @@ function closeLightbox() {
 
 
   /*
-   * Return keyboard focus to the element
-   * that opened the lightbox.
+   * Restore previous focus.
    */
 
   if (
@@ -381,17 +413,12 @@ function closeLightbox() {
 }
 
 
-/*
- * Make functions available globally because
- * the HTML uses onclick="openLightbox(...)"
- */
-
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 
 
 /*
- * Close using the X button.
+ * Close using X button.
  */
 
 lightboxClose?.addEventListener(
@@ -407,16 +434,14 @@ lightboxClose?.addEventListener(
 
 
 /*
- * Clicking the dark background closes the lightbox.
+ * Clicking dark background closes lightbox.
  */
 
 lightbox?.addEventListener(
   'click',
   (event) => {
 
-    if (
-      event.target === lightbox
-    ) {
+    if (event.target === lightbox) {
       closeLightbox();
     }
 
@@ -425,19 +450,38 @@ lightbox?.addEventListener(
 
 
 /*
- * Escape closes the lightbox.
+ * Keyboard handling.
  */
 
 document.addEventListener(
   'keydown',
   (event) => {
 
-    if (
-      event.key === 'Escape' &&
-      lightbox?.classList.contains('open')
-    ) {
+    if (event.key === 'Escape') {
 
-      closeLightbox();
+      /*
+       * Close lightbox first.
+       */
+
+      if (
+        lightbox?.classList.contains('open')
+      ) {
+        closeLightbox();
+        return;
+      }
+
+
+      /*
+       * Otherwise close mobile menu.
+       */
+
+      if (
+        menuToggle &&
+        menuToggle.getAttribute('aria-expanded') === 'true'
+      ) {
+        setMenuState(false);
+        menuToggle.focus();
+      }
 
     }
 
@@ -446,7 +490,7 @@ document.addEventListener(
 
 
 /*
- * Basic keyboard trap inside the lightbox.
+ * Basic keyboard trap inside lightbox.
  */
 
 lightbox?.addEventListener(
@@ -483,16 +527,14 @@ function animateCounter(counter) {
   const target =
     Number(counter.dataset.target);
 
-  if (
-    !Number.isFinite(target)
-  ) {
+  if (!Number.isFinite(target)) {
     return;
   }
 
 
   /*
    * Reduced motion:
-   * show the final value immediately.
+   * show final value immediately.
    */
 
   if (prefersReducedMotion) {
@@ -619,11 +661,6 @@ if (counters.length) {
    IMAGE ERROR HANDLING
 ========================================================= */
 
-/*
- * If an image cannot load, prevent ugly broken-image
- * rendering and keep the layout stable.
- */
-
 document
   .querySelectorAll('img')
   .forEach((image) => {
@@ -646,14 +683,6 @@ document
 /* =========================================================
    ANCHOR LINKS
 ========================================================= */
-
-/*
- * Smooth scrolling is already enabled through CSS.
- *
- * This handler makes sure that navigation works
- * correctly with the fixed header and closes the
- * mobile menu before scrolling.
- */
 
 document
   .querySelectorAll('a[href^="#"]')
@@ -681,9 +710,10 @@ document
         }
 
         /*
-         * Let the browser handle the actual
-         * scrolling via CSS scroll-behavior.
-         * We only close the mobile menu.
+         * Close mobile menu.
+         *
+         * Scrolling itself is handled by CSS
+         * scroll-behavior.
          */
 
         setMenuState(false);
@@ -701,3 +731,4 @@ document
 document.documentElement.classList.add(
   'js-ready'
 );
+```
