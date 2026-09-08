@@ -24,22 +24,56 @@ const prefersReducedMotion = window.matchMedia(
    HEADER
 ========================================================= */
 
-function updateHeader() {
-  if (!header) return;
+/*
+ * Instead of checking window.scrollY on every scroll event,
+ * use IntersectionObserver.
+ *
+ * This avoids unnecessary layout work caused by changing
+ * the header class during scroll.
+ */
 
-  header.classList.toggle(
-    'scrolled',
-    window.scrollY > 50
+if (
+  header &&
+  'IntersectionObserver' in window
+) {
+  const headerSentinel = document.createElement('div');
+
+  headerSentinel.setAttribute(
+    'aria-hidden',
+    'true'
+  );
+
+  headerSentinel.style.position = 'absolute';
+  headerSentinel.style.top = '50px';
+  headerSentinel.style.left = '0';
+  headerSentinel.style.width = '1px';
+  headerSentinel.style.height = '1px';
+  headerSentinel.style.pointerEvents = 'none';
+
+
+  document.body.prepend(headerSentinel);
+
+
+  const headerObserver =
+    new IntersectionObserver(
+      ([entry]) => {
+
+        header.classList.toggle(
+          'scrolled',
+          !entry.isIntersecting
+        );
+
+      },
+      {
+        threshold: 0
+      }
+    );
+
+
+  headerObserver.observe(
+    headerSentinel
   );
 }
-
-window.addEventListener(
-  'scroll',
-  updateHeader,
-  { passive: true }
-);
-
-updateHeader();
 
 
 /* =========================================================
@@ -47,14 +81,23 @@ updateHeader();
 ========================================================= */
 
 function setMenuState(open) {
-  if (!menuToggle || !nav) return;
 
-  nav.classList.toggle('open', open);
+  if (!menuToggle || !nav) {
+    return;
+  }
+
+
+  nav.classList.toggle(
+    'open',
+    open
+  );
+
 
   menuToggle.setAttribute(
     'aria-expanded',
     String(open)
   );
+
 
   menuToggle.setAttribute(
     'aria-label',
@@ -64,57 +107,100 @@ function setMenuState(open) {
   );
 }
 
-menuToggle?.addEventListener('click', () => {
-  const isOpen =
-    menuToggle.getAttribute('aria-expanded') === 'true';
 
-  setMenuState(!isOpen);
-});
+/*
+ * Toggle mobile menu.
+ */
+
+menuToggle?.addEventListener(
+  'click',
+  () => {
+
+    const isOpen =
+      menuToggle.getAttribute(
+        'aria-expanded'
+      ) === 'true';
+
+
+    setMenuState(!isOpen);
+
+  }
+);
 
 
 /*
- * Close mobile menu after clicking a navigation link.
+ * Close mobile menu after clicking
+ * a navigation link.
  */
 
 navLinks.forEach((link) => {
-  link.addEventListener('click', () => {
-    setMenuState(false);
-  });
+
+  link.addEventListener(
+    'click',
+    () => {
+      setMenuState(false);
+    }
+  );
+
 });
 
 
 /*
- * Close menu when clicking outside it.
+ * Close menu when clicking outside.
  */
 
-document.addEventListener('click', (event) => {
-  if (!nav || !menuToggle) return;
+document.addEventListener(
+  'click',
+  (event) => {
 
-  const isMenuOpen =
-    menuToggle.getAttribute('aria-expanded') === 'true';
+    if (!nav || !menuToggle) {
+      return;
+    }
 
-  if (!isMenuOpen) return;
 
-  const target = event.target;
+    const isMenuOpen =
+      menuToggle.getAttribute(
+        'aria-expanded'
+      ) === 'true';
 
-  if (
-    !nav.contains(target) &&
-    !menuToggle.contains(target)
-  ) {
-    setMenuState(false);
+
+    if (!isMenuOpen) {
+      return;
+    }
+
+
+    const target =
+      event.target;
+
+
+    if (
+      !nav.contains(target) &&
+      !menuToggle.contains(target)
+    ) {
+
+      setMenuState(false);
+
+    }
+
   }
-});
+);
 
 
 /*
- * Reset menu when returning to desktop.
+ * Reset mobile menu when returning
+ * to desktop width.
  */
 
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 850) {
-    setMenuState(false);
+window.addEventListener(
+  'resize',
+  () => {
+
+    if (window.innerWidth > 850) {
+      setMenuState(false);
+    }
+
   }
-});
+);
 
 
 /* =========================================================
@@ -125,52 +211,87 @@ const revealElements = [
   ...document.querySelectorAll('.reveal')
 ];
 
+
 if (prefersReducedMotion) {
 
-  revealElements.forEach((element) => {
-    element.classList.add('visible');
-  });
-
-} else if ('IntersectionObserver' in window) {
-
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-
-      entries.forEach((entry) => {
-
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add('visible');
-
-        observer.unobserve(entry.target);
-
-      });
-
-    },
-    {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+  revealElements.forEach(
+    (element) => {
+      element.classList.add('visible');
     }
   );
 
+} else if (
+  'IntersectionObserver' in window
+) {
 
-  revealElements.forEach((element, index) => {
+  const revealObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
 
-    const delay =
-      Math.min(index % 5, 4) * 70;
+        entries.forEach(
+          (entry) => {
 
-    element.style.transitionDelay =
-      `${delay}ms`;
+            if (!entry.isIntersecting) {
+              return;
+            }
 
-    revealObserver.observe(element);
 
-  });
+            entry.target.classList.add(
+              'visible'
+            );
+
+
+            observer.unobserve(
+              entry.target
+            );
+
+          }
+        );
+
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      }
+    );
+
+
+  revealElements.forEach(
+    (element, index) => {
+
+      /*
+       * Small stagger effect.
+       */
+
+      const delay =
+        Math.min(
+          index % 5,
+          4
+        ) * 70;
+
+
+      element.style.transitionDelay =
+        `${delay}ms`;
+
+
+      revealObserver.observe(
+        element
+      );
+
+    }
+  );
 
 } else {
 
-  revealElements.forEach((element) => {
-    element.classList.add('visible');
-  });
+  /*
+   * Fallback for older browsers.
+   */
+
+  revealElements.forEach(
+    (element) => {
+      element.classList.add('visible');
+    }
+  );
 
 }
 
@@ -180,11 +301,13 @@ if (prefersReducedMotion) {
 ========================================================= */
 
 /*
- * Use IntersectionObserver instead of reading
- * section.offsetTop on every scroll event.
+ * Use IntersectionObserver instead of:
  *
- * This avoids repeated layout calculations and
- * prevents unnecessary forced reflows.
+ * - section.offsetTop
+ * - section.getBoundingClientRect()
+ * - scroll event calculations
+ *
+ * This keeps navigation state lightweight.
  */
 
 if (
@@ -193,118 +316,121 @@ if (
   'IntersectionObserver' in window
 ) {
 
-  const sectionToNavLink = new Map();
-
-  navLinks.forEach((link) => {
-
-    const href =
-      link.getAttribute('href');
-
-    if (!href?.startsWith('#')) {
-      return;
-    }
-
-    const targetId =
-      href.substring(1);
-
-    const targetSection =
-      document.getElementById(targetId);
-
-    if (targetSection) {
-      sectionToNavLink.set(
-        targetSection,
-        link
-      );
-    }
-
-  });
+  const sectionLinks =
+    new Map();
 
 
-  const activeSections = new Set();
+  /*
+   * Map each section to its navigation link.
+   */
+
+  navLinks.forEach(
+    (link) => {
+
+      const href =
+        link.getAttribute('href');
 
 
-  function updateActiveLink() {
-
-    /*
-     * Find the section closest to the top of
-     * the viewport.
-     */
-
-    let activeSection = null;
-    let smallestDistance = Infinity;
-
-    activeSections.forEach((section) => {
-
-      const rect =
-        section.getBoundingClientRect();
-
-      const distance =
-        Math.abs(rect.top - 180);
-
-      if (distance < smallestDistance) {
-        smallestDistance = distance;
-        activeSection = section;
+      if (!href?.startsWith('#')) {
+        return;
       }
 
-    });
+
+      const sectionId =
+        href.substring(1);
 
 
-    navLinks.forEach((link) => {
-      link.classList.remove('active');
-    });
+      const section =
+        document.getElementById(
+          sectionId
+        );
 
 
-    if (activeSection) {
+      if (section) {
 
-      const activeLink =
-        sectionToNavLink.get(activeSection);
+        sectionLinks.set(
+          section,
+          link
+        );
 
-      activeLink?.classList.add('active');
+      }
 
     }
+  );
 
-  }
+
+  let activeSection = null;
 
 
   const navigationObserver =
     new IntersectionObserver(
       (entries) => {
 
-        entries.forEach((entry) => {
+        entries.forEach(
+          (entry) => {
 
-          if (entry.isIntersecting) {
-            activeSections.add(entry.target);
-          } else {
-            activeSections.delete(entry.target);
+            if (entry.isIntersecting) {
+
+              activeSection =
+                entry.target;
+
+            }
+
           }
+        );
 
-        });
 
-        updateActiveLink();
+        /*
+         * Remove active state.
+         */
+
+        navLinks.forEach(
+          (link) => {
+
+            link.classList.remove(
+              'active'
+            );
+
+          }
+        );
+
+
+        /*
+         * Add active state.
+         */
+
+        if (activeSection) {
+
+          const activeLink =
+            sectionLinks.get(
+              activeSection
+            );
+
+
+          activeLink?.classList.add(
+            'active'
+          );
+
+        }
 
       },
       {
         root: null,
-        rootMargin: '-180px 0px -45% 0px',
+        rootMargin: '-180px 0px -50% 0px',
         threshold: 0
       }
     );
 
 
-  sections.forEach((section) => {
-    navigationObserver.observe(section);
-  });
+  sections.forEach(
+    (section) => {
 
+      navigationObserver.observe(
+        section
+      );
 
-} else {
-
-  /*
-   * Fallback for browsers without IntersectionObserver.
-   */
-
-  navLinks.forEach((link) => {
-    link.classList.remove('active');
-  });
+    }
+  );
 
 }
 
@@ -319,39 +445,68 @@ let lastFocusedElement = null;
 /*
  * Open lightbox.
  *
- * Called directly from image onclick:
+ * Called from HTML:
  *
  * openLightbox(this.src, this.alt)
  */
 
-function openLightbox(src, alt = '') {
+function openLightbox(
+  src,
+  alt = ''
+) {
 
-  if (!lightbox || !lightboxImage) {
+  if (
+    !lightbox ||
+    !lightboxImage
+  ) {
     return;
   }
+
 
   lastFocusedElement =
     document.activeElement;
 
-  lightboxImage.src = src;
-  lightboxImage.alt = alt;
 
-  lightbox.classList.add('open');
+  lightboxImage.src =
+    src;
+
+
+  lightboxImage.alt =
+    alt;
+
+
+  lightbox.classList.add(
+    'open'
+  );
+
 
   lightbox.setAttribute(
     'aria-hidden',
     'false'
   );
 
+
   document.body.classList.add(
     'lightbox-open'
   );
 
-  document.body.style.overflow = 'hidden';
 
-  requestAnimationFrame(() => {
-    lightboxClose?.focus();
-  });
+  document.body.style.overflow =
+    'hidden';
+
+
+  /*
+   * Move keyboard focus to
+   * the close button.
+   */
+
+  requestAnimationFrame(
+    () => {
+
+      lightboxClose?.focus();
+
+    }
+  );
 
 }
 
@@ -366,36 +521,56 @@ function closeLightbox() {
     return;
   }
 
-  lightbox.classList.remove('open');
+
+  lightbox.classList.remove(
+    'open'
+  );
+
 
   lightbox.setAttribute(
     'aria-hidden',
     'true'
   );
 
+
   document.body.classList.remove(
     'lightbox-open'
   );
 
-  document.body.style.overflow = '';
+
+  document.body.style.overflow =
+    '';
 
 
   /*
-   * Clear image after closing transition.
+   * Clear image after the closing
+   * transition.
    */
 
-  window.setTimeout(() => {
+  window.setTimeout(
+    () => {
 
-    if (!lightbox.classList.contains('open')) {
+      if (
+        !lightbox.classList.contains(
+          'open'
+        )
+      ) {
 
-      if (lightboxImage) {
-        lightboxImage.src = '';
-        lightboxImage.alt = '';
+        if (lightboxImage) {
+
+          lightboxImage.src =
+            '';
+
+          lightboxImage.alt =
+            '';
+
+        }
+
       }
 
-    }
-
-  }, 250);
+    },
+    250
+  );
 
 
   /*
@@ -404,16 +579,27 @@ function closeLightbox() {
 
   if (
     lastFocusedElement &&
-    typeof lastFocusedElement.focus === 'function'
+    typeof lastFocusedElement.focus ===
+      'function'
   ) {
+
     lastFocusedElement.focus();
+
   }
 
 }
 
 
-window.openLightbox = openLightbox;
-window.closeLightbox = closeLightbox;
+/*
+ * Make functions globally available
+ * because the HTML uses onclick.
+ */
+
+window.openLightbox =
+  openLightbox;
+
+window.closeLightbox =
+  closeLightbox;
 
 
 /*
@@ -433,15 +619,20 @@ lightboxClose?.addEventListener(
 
 
 /*
- * Clicking dark background closes lightbox.
+ * Clicking the dark background
+ * closes the lightbox.
  */
 
 lightbox?.addEventListener(
   'click',
   (event) => {
 
-    if (event.target === lightbox) {
+    if (
+      event.target === lightbox
+    ) {
+
       closeLightbox();
+
     }
 
   }
@@ -449,38 +640,46 @@ lightbox?.addEventListener(
 
 
 /*
- * Keyboard handling.
+ * Escape:
+ *
+ * 1. Close lightbox if open.
+ * 2. Otherwise close mobile menu.
  */
 
 document.addEventListener(
   'keydown',
   (event) => {
 
-    if (event.key === 'Escape') {
-
-      /*
-       * Close lightbox first.
-       */
-
-      if (
-        lightbox?.classList.contains('open')
-      ) {
-        closeLightbox();
-        return;
-      }
+    if (
+      event.key !== 'Escape'
+    ) {
+      return;
+    }
 
 
-      /*
-       * Otherwise close mobile menu.
-       */
+    if (
+      lightbox?.classList.contains(
+        'open'
+      )
+    ) {
 
-      if (
-        menuToggle &&
-        menuToggle.getAttribute('aria-expanded') === 'true'
-      ) {
-        setMenuState(false);
-        menuToggle.focus();
-      }
+      closeLightbox();
+
+      return;
+
+    }
+
+
+    if (
+      menuToggle &&
+      menuToggle.getAttribute(
+        'aria-expanded'
+      ) === 'true'
+    ) {
+
+      setMenuState(false);
+
+      menuToggle.focus();
 
     }
 
@@ -489,20 +688,25 @@ document.addEventListener(
 
 
 /*
- * Basic keyboard trap inside lightbox.
+ * Basic keyboard trap inside
+ * the lightbox.
  */
 
 lightbox?.addEventListener(
   'keydown',
   (event) => {
 
-    if (event.key !== 'Tab') {
+    if (
+      event.key !== 'Tab'
+    ) {
       return;
     }
+
 
     if (!lightboxClose) {
       return;
     }
+
 
     event.preventDefault();
 
@@ -517,16 +721,23 @@ lightbox?.addEventListener(
 ========================================================= */
 
 const counters = [
-  ...document.querySelectorAll('.counter')
+  ...document.querySelectorAll(
+    '.counter'
+  )
 ];
 
 
 function animateCounter(counter) {
 
   const target =
-    Number(counter.dataset.target);
+    Number(
+      counter.dataset.target
+    );
 
-  if (!Number.isFinite(target)) {
+
+  if (
+    !Number.isFinite(target)
+  ) {
     return;
   }
 
@@ -539,23 +750,31 @@ function animateCounter(counter) {
   if (prefersReducedMotion) {
 
     counter.textContent =
-      target.toLocaleString('el-GR');
+      target.toLocaleString(
+        'el-GR'
+      );
 
     return;
 
   }
 
 
-  const duration = 1600;
+  const duration =
+    1600;
+
 
   const startTime =
     performance.now();
 
 
-  function updateCounter(currentTime) {
+  function updateCounter(
+    currentTime
+  ) {
 
     const elapsed =
-      currentTime - startTime;
+      currentTime -
+      startTime;
+
 
     const progress =
       Math.min(
@@ -569,18 +788,28 @@ function animateCounter(counter) {
      */
 
     const eased =
-      1 - Math.pow(1 - progress, 3);
+      1 -
+      Math.pow(
+        1 - progress,
+        3
+      );
 
 
     const currentValue =
-      Math.floor(target * eased);
+      Math.floor(
+        target * eased
+      );
 
 
     counter.textContent =
-      currentValue.toLocaleString('el-GR');
+      currentValue.toLocaleString(
+        'el-GR'
+      );
 
 
-    if (progress < 1) {
+    if (
+      progress < 1
+    ) {
 
       requestAnimationFrame(
         updateCounter
@@ -589,7 +818,9 @@ function animateCounter(counter) {
     } else {
 
       counter.textContent =
-        target.toLocaleString('el-GR');
+        target.toLocaleString(
+          'el-GR'
+        );
 
     }
 
@@ -607,7 +838,10 @@ if (counters.length) {
 
   if (
     prefersReducedMotion ||
-    !('IntersectionObserver' in window)
+    !(
+      'IntersectionObserver' in
+      window
+    )
   ) {
 
     counters.forEach(
@@ -620,21 +854,27 @@ if (counters.length) {
       new IntersectionObserver(
         (entries, observer) => {
 
-          entries.forEach((entry) => {
+          entries.forEach(
+            (entry) => {
 
-            if (!entry.isIntersecting) {
-              return;
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
+
+
+              animateCounter(
+                entry.target
+              );
+
+
+              observer.unobserve(
+                entry.target
+              );
+
             }
-
-            animateCounter(
-              entry.target
-            );
-
-            observer.unobserve(
-              entry.target
-            );
-
-          });
+          );
 
         },
         {
@@ -643,13 +883,15 @@ if (counters.length) {
       );
 
 
-    counters.forEach((counter) => {
+    counters.forEach(
+      (counter) => {
 
-      counterObserver.observe(
-        counter
-      );
+        counterObserver.observe(
+          counter
+        );
 
-    });
+      }
+    );
 
   }
 
@@ -662,21 +904,25 @@ if (counters.length) {
 
 document
   .querySelectorAll('img')
-  .forEach((image) => {
+  .forEach(
+    (image) => {
 
-    image.addEventListener(
-      'error',
-      () => {
+      image.addEventListener(
+        'error',
+        () => {
 
-        image.classList.add(
-          'image-error'
-        );
+          image.classList.add(
+            'image-error'
+          );
 
-      },
-      { once: true }
-    );
+        },
+        {
+          once: true
+        }
+      );
 
-  });
+    }
+  );
 
 
 /* =========================================================
@@ -684,43 +930,55 @@ document
 ========================================================= */
 
 document
-  .querySelectorAll('a[href^="#"]')
-  .forEach((link) => {
+  .querySelectorAll(
+    'a[href^="#"]'
+  )
+  .forEach(
+    (link) => {
 
-    link.addEventListener(
-      'click',
-      (event) => {
+      link.addEventListener(
+        'click',
+        (event) => {
 
-        const href =
-          link.getAttribute('href');
+          const href =
+            link.getAttribute(
+              'href'
+            );
 
-        if (
-          !href ||
-          href === '#'
-        ) {
-          return;
+
+          if (
+            !href ||
+            href === '#'
+          ) {
+            return;
+          }
+
+
+          const target =
+            document.querySelector(
+              href
+            );
+
+
+          if (!target) {
+            return;
+          }
+
+
+          /*
+           * Close mobile menu.
+           *
+           * Actual scrolling is handled
+           * by CSS scroll-behavior.
+           */
+
+          setMenuState(false);
+
         }
+      );
 
-        const target =
-          document.querySelector(href);
-
-        if (!target) {
-          return;
-        }
-
-        /*
-         * Close mobile menu.
-         *
-         * Scrolling itself is handled by CSS
-         * scroll-behavior.
-         */
-
-        setMenuState(false);
-
-      }
-    );
-
-  });
+    }
+  );
 
 
 /* =========================================================
