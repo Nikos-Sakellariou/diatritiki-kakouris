@@ -1,4 +1,3 @@
-```javascript
 'use strict';
 
 /* =========================================================
@@ -731,4 +730,3 @@ document
 document.documentElement.classList.add(
   'js-ready'
 );
-```
