@@ -8,17 +8,13 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <!-- =========================================================
-       SEO
-  ========================================================== -->
-
   <title>
     Διατρητική Κακούρης | Οριζόντιες & Κάθετες Διατρήσεις
   </title>
 
   <meta
     name="description"
-    content="Διατρητική Κακούρης: οριζόντιες και κάθετες διατρήσεις, φρεατοπάσσαλοι, αντιστηρίξεις πρανών και ειδικές διατρήσεις με σύγχρονο εξοπλισμό."
+    content="Διατρητική Κακούρης — Οριζόντιες και κάθετες διατρήσεις, αντιστηρίξεις πρανών, φρεατοπάσσαλοι και ειδικές διατρήσεις. Σύγχρονος εξοπλισμός και τεχνογνωσία για απαιτητικά τεχνικά έργα."
   >
 
   <meta
@@ -36,10 +32,19 @@
     href="https://diatritiki-kakouris.gr/"
   >
 
-  <!-- =========================================================
-       OPEN GRAPH
-  ========================================================== -->
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/icons/logo1.png"
+  >
 
+  <meta
+    name="theme-color"
+    content="#082846"
+  >
+
+  <!-- Open Graph -->
   <meta
     property="og:type"
     content="website"
@@ -57,7 +62,7 @@
 
   <meta
     property="og:description"
-    content="Οριζόντιες και κάθετες διατρήσεις, φρεατοπάσσαλοι, αντιστηρίξεις πρανών και ειδικές διατρήσεις."
+    content="Οριζόντιες και κάθετες διατρήσεις, αντιστηρίξεις πρανών, φρεατοπάσσαλοι και ειδικές διατρήσεις για απαιτητικά τεχνικά έργα."
   >
 
   <meta
@@ -77,13 +82,10 @@
 
   <meta
     property="og:image:alt"
-    content="Liebherr 916 - Διατρητική Κακούρης"
+    content="Μηχάνημα διάτρησης Liebherr 916"
   >
 
-  <!-- =========================================================
-       TWITTER / X
-  ========================================================== -->
-
+  <!-- Twitter / X -->
   <meta
     name="twitter:card"
     content="summary_large_image"
@@ -96,7 +98,7 @@
 
   <meta
     name="twitter:description"
-    content="Εξειδικευμένες λύσεις οριζόντιων και κάθετων διατρήσεων με σύγχρονο εξοπλισμό."
+    content="Οριζόντιες και κάθετες διατρήσεις, αντιστηρίξεις πρανών, φρεατοπάσσαλοι και ειδικές διατρήσεις."
   >
 
   <meta
@@ -104,49 +106,16 @@
     content="https://diatritiki-kakouris.gr/assets/images/Liebherr-916-04.jpg"
   >
 
-  <!-- =========================================================
-       FONTS
-  ========================================================== -->
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- =========================================================
-       STYLES
-  ========================================================== -->
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
-  <!-- =========================================================
-       STRUCTURED DATA
-  ========================================================== -->
-
+  <!-- Local Business structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://diatritiki-kakouris.gr/#business",
     "name": "Διατρητική Κακούρης",
     "url": "https://diatritiki-kakouris.gr/",
     "logo": "https://diatritiki-kakouris.gr/assets/icons/logo1.png",
     "image": "https://diatritiki-kakouris.gr/assets/images/Liebherr-916-04.jpg",
-    "description": "Εξειδικευμένες λύσεις οριζόντιων και κάθετων διατρήσεων, φρεατοπασσάλων, αντιστηρίξεων πρανών και ειδικών διατρήσεων.",
+    "description": "Οριζόντιες και κάθετες διατρήσεις, αντιστηρίξεις πρανών, φρεατοπάσσαλοι και ειδικές διατρήσεις για απαιτητικά τεχνικά έργα.",
     "telephone": "+302106219634",
     "email": "kakourismanolis@gmail.com",
     "address": {
@@ -158,52 +127,53 @@
       "addressCountry": "GR"
     },
     "areaServed": {
-      "@type": "Country",
-      "name": "Ελλάδα"
-    }
+      "@type": "AdministrativeArea",
+      "name": "Αττική"
+    },
+    "priceRange": "$$"
   }
   </script>
 
+  <!-- Main stylesheet -->
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <!-- JavaScript -->
+  <script
+    src="script.js"
+    defer
+  ></script>
 </head>
 
 <body>
 
-  <!-- =========================================================
-       HEADER
-  ========================================================== -->
-
-  <header
-    class="site-header"
-    id="top"
-  >
-
+  <!-- HEADER -->
+  <header class="site-header" id="top">
     <div class="container nav-wrap">
 
       <a
         class="logo"
         href="#top"
-        aria-label="Διατρητική Κακούρης - Αρχική"
+        aria-label="Διατρητική Κακούρης αρχική"
       >
-
         <img
           src="assets/icons/logo1.png"
           alt="Λογότυπο Διατρητική Κακούρης"
           width="100"
           height="auto"
-          fetchpriority="high">
+          fetchpriority="high"
         >
 
         <span>
           <strong>ΔΙΑΤΡΗΤΙΚΗ ΚΑΚΟΥΡΗΣ</strong>
           <small>DRILLING SOLUTIONS</small>
         </span>
-
       </a>
-
 
       <button
         class="menu-toggle"
-        type="button"
         aria-label="Άνοιγμα μενού"
         aria-expanded="false"
         aria-controls="main-navigation"
@@ -213,83 +183,53 @@
         <span></span>
       </button>
 
-
       <nav
         class="main-nav"
         id="main-navigation"
         aria-label="Κύρια πλοήγηση"
       >
-
-        <a
-          class="active"
-          href="#top"
-        >
-          ΑΡΧΙΚΗ
-        </a>
-
-        <a href="#services">
-          ΥΠΗΡΕΣΙΕΣ
-        </a>
-
-        <a href="#equipment">
-          ΕΞΟΠΛΙΣΜΟΣ
-        </a>
-
-        <a href="#projects">
-          ΕΡΓΑ
-        </a>
-
-        <a href="#company">
-          Η ΕΤΑΙΡΕΙΑ
-        </a>
-
-        <a href="#contact">
-          ΕΠΙΚΟΙΝΩΝΙΑ
-        </a>
-
+        <a class="active" href="#top">ΑΡΧΙΚΗ</a>
+        <a href="#services">ΥΠΗΡΕΣΙΕΣ</a>
+        <a href="#equipment">ΕΞΟΠΛΙΣΜΟΣ</a>
+        <a href="#projects">ΕΡΓΑ</a>
+        <a href="#company">Η ΕΤΑΙΡΕΙΑ</a>
+        <a href="#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>
       </nav>
-
 
       <a
         class="nav-cta"
         href="mailto:kakourismanolis@gmail.com?subject=Αίτημα%20Προσφοράς"
-        aria-label="Ζητήστε προσφορά μέσω email"
       >
         ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ
       </a>
 
     </div>
-
   </header>
 
 
   <main>
 
-    <!-- =======================================================
-         HERO
-    ======================================================== -->
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
 
-    <section
-      class="hero"
-      aria-labelledby="hero-title"
-    >
-
-      <img
+      <video
         class="hero-video"
-        src="assets/images/Liebherr-916-04.jpg"
-        alt=""
-        width="1920"
-        height="1080"
-        fetchpriority="high"
-        decoding="async"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="assets/images/Liebherr-916-04.jpg"
         aria-hidden="true"
       >
+        <!--
+        <source
+          src="assets/video/hero-dummy.mp4"
+          type="video/mp4"
+        >
+        -->
+      </video>
 
-      <div
-        class="hero-overlay"
-        aria-hidden="true"
-      ></div>
-
+      <div class="hero-overlay"></div>
 
       <div class="container hero-content reveal">
 
@@ -297,62 +237,38 @@
           ENGINEERING • PRECISION • PERFORMANCE
         </p>
 
-
         <h1 id="hero-title">
           ΟΡΙΖΟΝΤΙΕΣ &amp;<br>
           ΚΑΘΕΤΕΣ ΔΙΑΤΡΗΣΕΙΣ
         </h1>
-
 
         <p class="hero-subtitle">
           Σύγχρονες λύσεις διάτρησης<br>
           για κάθε τεχνική πρόκληση.
         </p>
 
-
         <div class="hero-actions">
-
-          <a
-            class="btn btn-primary"
-            href="#services"
-          >
+          <a class="btn btn-primary" href="#services">
             ΟΙ ΥΠΗΡΕΣΙΕΣ ΜΑΣ
           </a>
 
-          <a
-            class="btn btn-outline"
-            href="#projects"
-          >
+          <a class="btn btn-outline" href="#projects">
             ΤΑ ΕΡΓΑ ΜΑΣ
           </a>
-
         </div>
 
       </div>
-
 
       <a
         class="scroll-cue"
         href="#services"
         aria-label="Μετάβαση στις υπηρεσίες"
       >
-
-        <span
-          class="mouse"
-          aria-hidden="true"
-        ></span>
-
-        <span>
-          SCROLL DOWN
-        </span>
-
+        <span class="mouse"></span>
+        <span>SCROLL DOWN</span>
       </a>
 
-
-      <div
-        class="hero-index"
-        aria-hidden="true"
-      >
+      <div class="hero-index" aria-hidden="true">
         <span>01</span>
         <span>02</span>
         <span>03</span>
@@ -362,10 +278,7 @@
     </section>
 
 
-    <!-- =======================================================
-         SERVICES
-    ======================================================== -->
-
+    <!-- SERVICES -->
     <section
       class="section services"
       id="services"
@@ -384,24 +297,16 @@
             ΤΕΧΝΙΚΕΣ ΛΥΣΕΙΣ ΥΨΗΛΗΣ ΑΚΡΙΒΕΙΑΣ
           </h2>
 
-          <span
-            class="heading-line"
-            aria-hidden="true"
-          ></span>
+          <span class="heading-line"></span>
 
         </div>
 
 
         <div class="service-grid">
 
-          <!-- HORIZONTAL DRILLING -->
-
           <article class="service-card reveal">
 
-            <div
-              class="service-icon"
-              aria-hidden="true"
-            ></div>
+            <div class="service-icon" aria-hidden="true"></div>
 
             <h3>
               ΟΡΙΖΟΝΤΙΕΣ ΔΙΑΤΡΗΣΕΙΣ
@@ -423,14 +328,9 @@
           </article>
 
 
-          <!-- VERTICAL DRILLING -->
-
           <article class="service-card reveal">
 
-            <div
-              class="service-icon"
-              aria-hidden="true"
-            ></div>
+            <div class="service-icon" aria-hidden="true"></div>
 
             <h3>
               ΚΑΘΕΤΕΣ ΔΙΑΤΡΗΣΕΙΣ
@@ -452,14 +352,9 @@
           </article>
 
 
-          <!-- SLOPE STABILIZATION -->
-
           <article class="service-card reveal">
 
-            <div
-              class="service-icon"
-              aria-hidden="true"
-            ></div>
+            <div class="service-icon" aria-hidden="true"></div>
 
             <h3>
               ΑΝΤΙΣΤΗΡΙΞΕΙΣ ΠΡΑΝΩΝ
@@ -481,14 +376,9 @@
           </article>
 
 
-          <!-- PILES -->
-
           <article class="service-card reveal">
 
-            <div
-              class="service-icon"
-              aria-hidden="true"
-            ></div>
+            <div class="service-icon" aria-hidden="true"></div>
 
             <h3>
               ΦΡΕΑΤΟΠΑΣΣΑΛΟΙ
@@ -510,14 +400,9 @@
           </article>
 
 
-          <!-- SPECIAL DRILLING -->
-
           <article class="service-card reveal">
 
-            <div
-              class="service-icon"
-              aria-hidden="true"
-            ></div>
+            <div class="service-icon" aria-hidden="true"></div>
 
             <h3>
               ΕΙΔΙΚΕΣ ΔΙΑΤΡΗΣΕΙΣ
@@ -545,10 +430,7 @@
     </section>
 
 
-    <!-- =======================================================
-         EQUIPMENT
-    ======================================================== -->
-
+    <!-- EQUIPMENT -->
     <section
       class="section equipment"
       id="equipment"
@@ -567,10 +449,7 @@
             ΣΥΓΧΡΟΝΟΣ ΣΤΟΛΟΣ ΜΗΧΑΝΗΜΑΤΩΝ
           </h2>
 
-          <span
-            class="heading-line"
-            aria-hidden="true"
-          ></span>
+          <span class="heading-line"></span>
 
           <p>
             Επενδύουμε σε σύγχρονο εξοπλισμό διάτρησης για
@@ -578,10 +457,7 @@
             τεχνικά έργα.
           </p>
 
-          <a
-            class="btn btn-primary"
-            href="#projects"
-          >
+          <a class="btn btn-primary" href="#projects">
             ΔΕΙΤΕ ΤΑ ΕΡΓΑ ΜΑΣ
           </a>
 
@@ -590,10 +466,7 @@
 
         <div class="equipment-grid">
 
-          <!-- MANITOU -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Manitou-MT1232S-02c.jpg"
               alt="Manitou MT1232S μηχάνημα διάτρησης"
@@ -601,24 +474,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Manitou MT1232S
-              </h3>
-
+              <h3>Manitou MT1232S</h3>
               <p>
                 Διάμετρος: έως 800mm · Μήκος: έως 100m
               </p>
             </div>
-
           </article>
 
 
-          <!-- LIEBHERR 912 -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Liebherr-912-01c.jpg"
               alt="Liebherr 912 μηχάνημα διάτρησης"
@@ -626,24 +491,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Liebherr 912
-              </h3>
-
+              <h3>Liebherr 912</h3>
               <p>
                 Διάμετρος: έως 800mm · Μήκος: έως 100m
               </p>
             </div>
-
           </article>
 
 
-          <!-- LIEBHERR 916 -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Liebherr-916-01c.jpg"
               alt="Liebherr 916 γεωτρύπανο"
@@ -651,24 +508,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Liebherr 916
-              </h3>
-
+              <h3>Liebherr 916</h3>
               <p>
                 Διάμετρος: έως 1500mm · Βάθος: έως 60m
               </p>
             </div>
-
           </article>
 
 
-          <!-- LIEBHERR 924 -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Liebherr-924-01c.jpg"
               alt="Liebherr 924 γεωτρύπανο για κάθετες διατρήσεις"
@@ -676,24 +525,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Liebherr 924
-              </h3>
-
+              <h3>Liebherr 924</h3>
               <p>
                 Διάμετρος: έως 1500mm · Βάθος: έως 60m
               </p>
             </div>
-
           </article>
 
 
-          <!-- LIEBHERR 924R -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Liebherr-924r-03c.jpg"
               alt="Liebherr 924R μηχάνημα διάτρησης"
@@ -701,24 +542,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Liebherr 924R
-              </h3>
-
+              <h3>Liebherr 924R</h3>
               <p>
                 Διάμετρος: έως 1500mm · Βάθος: έως 60m
               </p>
             </div>
-
           </article>
 
 
-          <!-- BOBCAT -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Bobcat-S300-03c.jpg"
               alt="Bobcat S300 μηχάνημα έργου"
@@ -726,24 +559,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Bobcat S300
-              </h3>
-
+              <h3>Bobcat S300</h3>
               <p>
                 Διάμετρος: έως 800mm · Μήκος: έως 100m
               </p>
             </div>
-
           </article>
 
 
-          <!-- TEREX -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Terex-TC75-02c.jpg"
               alt="Terex TC75 μηχάνημα διάτρησης"
@@ -751,24 +576,16 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Terex TC75
-              </h3>
-
+              <h3>Terex TC75</h3>
               <p>
                 Διάμετρος: έως 1500mm · Βάθος: έως 60m
               </p>
             </div>
-
           </article>
 
 
-          <!-- CUSTOM PLATFORM -->
-
           <article class="machine reveal">
-
             <img
               src="assets/images/Machine-03c.jpg"
               alt="Ειδική πλατφόρμα γεώτρησης και διάτρησης"
@@ -776,17 +593,12 @@
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div>
-              <h3>
-                Custom Πλατφόρμα
-              </h3>
-
+              <h3>Custom Πλατφόρμα</h3>
               <p>
                 Διάμετρος: έως 400mm · Βάθος: έως 35m
               </p>
             </div>
-
           </article>
 
         </div>
@@ -796,25 +608,17 @@
     </section>
 
 
-    <!-- =======================================================
-         COMPANY / STATS
-    ======================================================== -->
-
+    <!-- STATS -->
     <section
       class="stats"
       id="company"
       aria-labelledby="company-stats-title"
     >
 
-      <h2
-        id="company-stats-title"
-        class="visually-hidden"
-      >
-        Διατρητική Κακούρης σε αριθμούς
-      </h2>
-
-
       <div class="container stats-grid">
+
+
+
 
         <div class="stat reveal">
 
@@ -884,10 +688,7 @@
     </section>
 
 
-    <!-- =======================================================
-         PROJECTS
-    ======================================================== -->
-
+    <!-- PROJECTS -->
     <section
       class="section projects"
       id="projects"
@@ -906,185 +707,110 @@
             ΕΡΓΑ ΠΟΥ ΜΙΛΟΥΝ ΓΙΑ ΕΜΑΣ
           </h2>
 
-          <span
-            class="heading-line"
-            aria-hidden="true"
-          ></span>
+          <span class="heading-line"></span>
 
         </div>
 
 
         <div class="project-grid">
 
-          <!-- MYKONOS -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Mykonos.jpg"
-              alt="Αντιστήριξη πρανών με διατρήσεις αγκυρίων στο λιμάνι Μυκόνου"
+              alt="Αντιστήριξη πρανών με διατρήσεις αγκυρίων"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΑΝΤΙΣΤΗΡΙΞΗ ΠΡΑΝΩΝ ΜΕ ΑΓΚΥΡΙΑ
-              </h3>
-
-              <span>
-                Λιμάνι Μυκόνου
-              </span>
-
+              <h3>ΑΝΤΙΣΤΗΡΙΞΗ ΠΡΑΝΩΝ ΜΕ ΑΓΚΥΡΙΑ</h3>
+              <span>Λιμάνι Μυκόνου</span>
             </div>
-
           </article>
 
 
-          <!-- ARGOLIDA -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Argolida.jpg"
-              alt="Αντιστήριξη βράχων σε Ιερό Ναό στην Αργολίδα"
+              alt="Αντιστήριξη βράχων σε Ιερό Ναό"
               width="960"
               height="1280"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΑΝΤΙΣΤΗΡΙΞΗ ΒΡΑΧΩΝ
-              </h3>
-
-              <span>
-                Αργολίδα
-              </span>
-
+              <h3>ΑΝΤΙΣΤΗΡΙΞΗ ΒΡΑΧΩΝ</h3>
+              <span>Αργολίδα</span>
             </div>
-
           </article>
 
 
-          <!-- MANDRA -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Mandra.jpg"
-              alt="Αντιστήριξη πρανών στο εργοστάσιο ΤΙΤΑΝ στη Μάνδρα"
+              alt="Αντιστήριξη πρανών - Εργοστάσιο ΤΙΤΑΝ"
               width="1200"
               height="1600"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΑΝΤΙΣΤΗΡΙΞΗ ΠΡΑΝΩΝ - ΕΡΓΟΣΤΑΣΙΟ ΤΙΤΑΝ
-              </h3>
-
-              <span>
-                Μάνδρα
-              </span>
-
+              <h3>ΑΝΤΙΣΤΗΡΙΞΗ ΠΡΑΝΩΝ - ΕΡΓΟΣΤΑΣΙΟ ΤΙΤΑΝ</h3>
+              <span>Μάνδρα</span>
             </div>
-
           </article>
 
 
-          <!-- RETHYMNO -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Rethymno.jpg"
-              alt="Αντιστήριξη βράχων σε φαράγγι στο Ρέθυμνο"
+              alt="Αντιστήριξη βράχων σε φαράγγι"
               width="1200"
               height="1600"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΑΝΤΙΣΤΗΡΙΞΗ ΒΡΑΧΩΝ ΣΕ ΦΑΡΑΓΓΙ
-              </h3>
-
-              <span>
-                Ρέθυμνο
-              </span>
-
+              <h3>ΑΝΤΙΣΤΗΡΙΞΗ ΒΡΑΧΩΝ ΣΕ ΦΑΡΑΓΓΙ</h3>
+              <span>Ρέθυμνο</span>
             </div>
-
           </article>
 
 
-          <!-- ADMIE -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Admie.jpg"
-              alt="Διατρήσεις βάσεων πυλώνων για έργο του ΑΔΜΗΕ"
+              alt="Διατρήσεις βάσεων πυλώνων"
               width="1200"
               height="1600"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΔΙΑΤΡΗΣΕΙΣ ΒΑΣΕΩΝ ΠΥΛΩΝΩΝ - ΑΔΜΗΕ
-              </h3>
-
-              <span>
-                Ηπειρωτική Ελλάδα
-              </span>
-
+              <h3>ΔΙΑΤΡΗΣΕΙΣ ΒΑΣΕΩΝ ΠΥΛΩΝΩΝ - ΑΔΜΗΕ</h3>
+              <span>Ηπειρωτική Ελλάδα</span>
             </div>
-
           </article>
 
 
-          <!-- KITHAIRONA -->
-
           <article class="project reveal">
-
             <img
               src="assets/images/Project-Kithaironas.jpg"
-              alt="Διατρήσεις εδάφους για αιολικό πάρκο στον Κιθαιρώνα"
+              alt="Διατρήσεις εδάφους - αιολικό πάρκο"
               width="1200"
               height="1600"
               loading="lazy"
               decoding="async"
               onclick="openLightbox(this.src, this.alt)"
             >
-
             <div class="project-info">
-
-              <h3>
-                ΔΙΑΤΡΗΣΕΙΣ ΕΔΑΦΟΥΣ - ΑΙΟΛΙΚΟ ΠΑΡΚΟ
-              </h3>
-
-              <span>
-                Κιθαιρώνας
-              </span>
-
+              <h3>ΔΙΑΤΡΗΣΕΙΣ ΕΔΑΦΟΥΣ - ΑΙΟΛΙΚΟ ΠΑΡΚΟ</h3>
+              <span>Κιθαιρώνας</span>
             </div>
-
           </article>
 
         </div>
@@ -1106,21 +832,14 @@
     </section>
 
 
-    <!-- =======================================================
-         CONTACT CTA
-    ======================================================== -->
-
+    <!-- CONTACT CTA -->
     <section
       class="cta"
       id="contact"
       aria-labelledby="contact-title"
     >
 
-      <div
-        class="cta-bg"
-        aria-hidden="true"
-      ></div>
-
+      <div class="cta-bg"></div>
 
       <div class="container cta-content reveal">
 
@@ -1152,22 +871,18 @@
   </main>
 
 
-  <!-- =========================================================
-       FOOTER
-  ========================================================== -->
-
+  <!-- FOOTER -->
   <footer class="footer">
 
     <div class="container footer-grid">
 
-      <!-- COMPANY -->
 
       <div>
 
         <a
           class="logo footer-logo"
           href="#top"
-          aria-label="Διατρητική Κακούρης - Αρχική"
+          aria-label="Διατρητική Κακούρης αρχική"
         >
 
           <img
@@ -1195,44 +910,22 @@
       </div>
 
 
-      <!-- QUICK LINKS -->
-
       <div>
 
-        <h4>
-          ΓΡΗΓΟΡΕΣ ΣΥΝΔΕΣΕΙΣ
-        </h4>
+        <h4>ΓΡΗΓΟΡΕΣ ΣΥΝΔΕΣΕΙΣ</h4>
 
-        <a href="#top">
-          Αρχική
-        </a>
-
-        <a href="#services">
-          Υπηρεσίες
-        </a>
-
-        <a href="#equipment">
-          Εξοπλισμός
-        </a>
-
-        <a href="#projects">
-          Έργα
-        </a>
-
-        <a href="#company">
-          Η Εταιρεία
-        </a>
+        <a href="#top">Αρχική</a>
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#equipment">Εξοπλισμός</a>
+        <a href="#projects">Έργα</a>
+        <a href="#company">Η Εταιρεία</a>
 
       </div>
 
 
-      <!-- SERVICES -->
-
       <div>
 
-        <h4>
-          ΥΠΗΡΕΣΙΕΣ
-        </h4>
+        <h4>ΥΠΗΡΕΣΙΕΣ</h4>
 
         <a href="#services">
           Οριζόντιες Διατρήσεις
@@ -1257,34 +950,22 @@
       </div>
 
 
-      <!-- CONTACT -->
-
       <div>
 
-        <h4>
-          ΕΠΙΚΟΙΝΩΝΙΑ
-        </h4>
+        <h4>ΕΠΙΚΟΙΝΩΝΙΑ</h4>
 
 
-        <a
-          href="tel:+302106219634"
-          aria-label="Καλέστε στο σταθερό τηλέφωνο 210 6219634"
-        >
+        <a href="tel:+302106219634">
           ☎ +30 210 6219634
         </a>
 
 
-        <a
-          href="tel:+306932380808"
-          aria-label="Καλέστε στο κινητό 693 2380808"
-        >
+        <a href="tel:+306932380808">
           📱 +30 693 2380808
         </a>
 
 
-        <a
-          href="mailto:kakourismanolis@gmail.com"
-        >
+        <a href="mailto:kakourismanolis@gmail.com">
           ✉ kakourismanolis@gmail.com
         </a>
 
@@ -1295,7 +976,7 @@
           rel="noopener noreferrer"
           aria-label="Άνοιγμα διεύθυνσης Διατρητική Κακούρης στο Google Maps"
         >
-          📍 Λεωφόρος Τραπεζούντος 113,<br>
+          🏠︎ Λεωφόρος Τραπεζούντος 113,
           Άγιος Στέφανος<br>
           Τ.Κ. 145 65, Αττική
         </a>
@@ -1320,23 +1001,18 @@
   </footer>
 
 
-  <!-- =========================================================
-       LIGHTBOX
-  ========================================================== -->
-
+  <!-- LIGHTBOX -->
   <div
     class="lightbox"
     id="lightbox"
     role="dialog"
     aria-modal="true"
     aria-label="Προβολή εικόνας"
-    aria-hidden="true"
     onclick="closeLightbox()"
   >
 
     <button
       class="lightbox-close"
-      type="button"
       onclick="event.stopPropagation(); closeLightbox()"
       aria-label="Κλείσιμο εικόνας"
     >
@@ -1352,13 +1028,6 @@
     >
 
   </div>
-
-
-  <!-- =========================================================
-       JAVASCRIPT
-  ========================================================== -->
-
-  <script src="script.js"></script>
 
 </body>
 </html>
